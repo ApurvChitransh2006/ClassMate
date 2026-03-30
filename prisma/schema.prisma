@@ -32,6 +32,8 @@ model User {
 
   classroomCreated Classroom[]
   classroomMember  ClassroomMember[]
+  tests            Test[]
+  testsAttempted   Attempt[]
   subjects         Subject[]
 }
 
@@ -127,6 +129,7 @@ model Chapter {
   updatedAt DateTime @updatedAt
 
   subject Subject @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  tests   Test[]
   contents Content[]
 }
 
@@ -142,4 +145,73 @@ model Content {
   updatedAt DateTime @updatedAt
 
   chapter Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+}
+
+model Test {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+
+  chapterId   String
+  createdBy   String
+
+  duration    Int    
+  totalMarks  Int
+  startTime   DateTime?
+  endTime     DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  chapter Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  creator User    @relation(fields: [createdBy], references: [id])
+
+  questions Question[]
+  attempts  Attempt[]
+}
+
+model Question {
+  id      String @id @default(cuid())
+  text    String
+  testId  String
+
+  test Test @relation(fields: [testId], references: [id], onDelete: Cascade)
+
+  options Option[]
+  answers Answer[]
+}
+
+model Option {
+  id         String  @id @default(cuid())
+  text       String
+  isCorrect  Boolean @default(false)
+  questionId String
+
+  question Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  answers  Answer[]
+}
+
+model Attempt {
+  id        String @id @default(cuid())
+  userId    String
+  testId    String
+  score     Int?
+
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  test Test @relation(fields: [testId], references: [id], onDelete: Cascade)
+
+  answers Answer[]
+}
+
+model Answer {
+  id         String @id @default(cuid())
+  attemptId  String
+  questionId String
+  optionId   String
+
+  attempt  Attempt  @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+  question Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  option   Option   @relation(fields: [optionId], references: [id], onDelete: Cascade)
 }

@@ -202,6 +202,8 @@ export type UserWhereInput = {
   sessions?: Prisma.SessionListRelationFilter
   classroomCreated?: Prisma.ClassroomListRelationFilter
   classroomMember?: Prisma.ClassroomMemberListRelationFilter
+  tests?: Prisma.TestListRelationFilter
+  testsAttempted?: Prisma.AttemptListRelationFilter
   subjects?: Prisma.SubjectListRelationFilter
 }
 
@@ -217,6 +219,8 @@ export type UserOrderByWithRelationInput = {
   sessions?: Prisma.SessionOrderByRelationAggregateInput
   classroomCreated?: Prisma.ClassroomOrderByRelationAggregateInput
   classroomMember?: Prisma.ClassroomMemberOrderByRelationAggregateInput
+  tests?: Prisma.TestOrderByRelationAggregateInput
+  testsAttempted?: Prisma.AttemptOrderByRelationAggregateInput
   subjects?: Prisma.SubjectOrderByRelationAggregateInput
 }
 
@@ -235,6 +239,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   sessions?: Prisma.SessionListRelationFilter
   classroomCreated?: Prisma.ClassroomListRelationFilter
   classroomMember?: Prisma.ClassroomMemberListRelationFilter
+  tests?: Prisma.TestListRelationFilter
+  testsAttempted?: Prisma.AttemptListRelationFilter
   subjects?: Prisma.SubjectListRelationFilter
 }, "id" | "email">
 
@@ -276,6 +282,8 @@ export type UserCreateInput = {
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   classroomCreated?: Prisma.ClassroomCreateNestedManyWithoutCreatorInput
   classroomMember?: Prisma.ClassroomMemberCreateNestedManyWithoutUserInput
+  tests?: Prisma.TestCreateNestedManyWithoutCreatorInput
+  testsAttempted?: Prisma.AttemptCreateNestedManyWithoutUserInput
   subjects?: Prisma.SubjectCreateNestedManyWithoutTeacherInput
 }
 
@@ -291,6 +299,8 @@ export type UserUncheckedCreateInput = {
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   classroomCreated?: Prisma.ClassroomUncheckedCreateNestedManyWithoutCreatorInput
   classroomMember?: Prisma.ClassroomMemberUncheckedCreateNestedManyWithoutUserInput
+  tests?: Prisma.TestUncheckedCreateNestedManyWithoutCreatorInput
+  testsAttempted?: Prisma.AttemptUncheckedCreateNestedManyWithoutUserInput
   subjects?: Prisma.SubjectUncheckedCreateNestedManyWithoutTeacherInput
 }
 
@@ -306,6 +316,8 @@ export type UserUpdateInput = {
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   classroomCreated?: Prisma.ClassroomUpdateManyWithoutCreatorNestedInput
   classroomMember?: Prisma.ClassroomMemberUpdateManyWithoutUserNestedInput
+  tests?: Prisma.TestUpdateManyWithoutCreatorNestedInput
+  testsAttempted?: Prisma.AttemptUpdateManyWithoutUserNestedInput
   subjects?: Prisma.SubjectUpdateManyWithoutTeacherNestedInput
 }
 
@@ -321,6 +333,8 @@ export type UserUncheckedUpdateInput = {
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   classroomCreated?: Prisma.ClassroomUncheckedUpdateManyWithoutCreatorNestedInput
   classroomMember?: Prisma.ClassroomMemberUncheckedUpdateManyWithoutUserNestedInput
+  tests?: Prisma.TestUncheckedUpdateManyWithoutCreatorNestedInput
+  testsAttempted?: Prisma.AttemptUncheckedUpdateManyWithoutUserNestedInput
   subjects?: Prisma.SubjectUncheckedUpdateManyWithoutTeacherNestedInput
 }
 
@@ -475,6 +489,34 @@ export type UserUpdateOneRequiredWithoutSubjectsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSubjectsInput, Prisma.UserUpdateWithoutSubjectsInput>, Prisma.UserUncheckedUpdateWithoutSubjectsInput>
 }
 
+export type UserCreateNestedOneWithoutTestsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutTestsInput, Prisma.UserUncheckedCreateWithoutTestsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTestsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutTestsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutTestsInput, Prisma.UserUncheckedCreateWithoutTestsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTestsInput
+  upsert?: Prisma.UserUpsertWithoutTestsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTestsInput, Prisma.UserUpdateWithoutTestsInput>, Prisma.UserUncheckedUpdateWithoutTestsInput>
+}
+
+export type UserCreateNestedOneWithoutTestsAttemptedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutTestsAttemptedInput, Prisma.UserUncheckedCreateWithoutTestsAttemptedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTestsAttemptedInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutTestsAttemptedNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutTestsAttemptedInput, Prisma.UserUncheckedCreateWithoutTestsAttemptedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTestsAttemptedInput
+  upsert?: Prisma.UserUpsertWithoutTestsAttemptedInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTestsAttemptedInput, Prisma.UserUpdateWithoutTestsAttemptedInput>, Prisma.UserUncheckedUpdateWithoutTestsAttemptedInput>
+}
+
 export type UserCreateWithoutAccountsInput = {
   id?: string
   name?: string | null
@@ -486,6 +528,8 @@ export type UserCreateWithoutAccountsInput = {
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   classroomCreated?: Prisma.ClassroomCreateNestedManyWithoutCreatorInput
   classroomMember?: Prisma.ClassroomMemberCreateNestedManyWithoutUserInput
+  tests?: Prisma.TestCreateNestedManyWithoutCreatorInput
+  testsAttempted?: Prisma.AttemptCreateNestedManyWithoutUserInput
   subjects?: Prisma.SubjectCreateNestedManyWithoutTeacherInput
 }
 
@@ -500,6 +544,8 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   classroomCreated?: Prisma.ClassroomUncheckedCreateNestedManyWithoutCreatorInput
   classroomMember?: Prisma.ClassroomMemberUncheckedCreateNestedManyWithoutUserInput
+  tests?: Prisma.TestUncheckedCreateNestedManyWithoutCreatorInput
+  testsAttempted?: Prisma.AttemptUncheckedCreateNestedManyWithoutUserInput
   subjects?: Prisma.SubjectUncheckedCreateNestedManyWithoutTeacherInput
 }
 
@@ -530,6 +576,8 @@ export type UserUpdateWithoutAccountsInput = {
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   classroomCreated?: Prisma.ClassroomUpdateManyWithoutCreatorNestedInput
   classroomMember?: Prisma.ClassroomMemberUpdateManyWithoutUserNestedInput
+  tests?: Prisma.TestUpdateManyWithoutCreatorNestedInput
+  testsAttempted?: Prisma.AttemptUpdateManyWithoutUserNestedInput
   subjects?: Prisma.SubjectUpdateManyWithoutTeacherNestedInput
 }
 
@@ -544,6 +592,8 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   classroomCreated?: Prisma.ClassroomUncheckedUpdateManyWithoutCreatorNestedInput
   classroomMember?: Prisma.ClassroomMemberUncheckedUpdateManyWithoutUserNestedInput
+  tests?: Prisma.TestUncheckedUpdateManyWithoutCreatorNestedInput
+  testsAttempted?: Prisma.AttemptUncheckedUpdateManyWithoutUserNestedInput
   subjects?: Prisma.SubjectUncheckedUpdateManyWithoutTeacherNestedInput
 }
 
@@ -558,6 +608,8 @@ export type UserCreateWithoutSessionsInput = {
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   classroomCreated?: Prisma.ClassroomCreateNestedManyWithoutCreatorInput
   classroomMember?: Prisma.ClassroomMemberCreateNestedManyWithoutUserInput
+  tests?: Prisma.TestCreateNestedManyWithoutCreatorInput
+  testsAttempted?: Prisma.AttemptCreateNestedManyWithoutUserInput
   subjects?: Prisma.SubjectCreateNestedManyWithoutTeacherInput
 }
 
@@ -572,6 +624,8 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   classroomCreated?: Prisma.ClassroomUncheckedCreateNestedManyWithoutCreatorInput
   classroomMember?: Prisma.ClassroomMemberUncheckedCreateNestedManyWithoutUserInput
+  tests?: Prisma.TestUncheckedCreateNestedManyWithoutCreatorInput
+  testsAttempted?: Prisma.AttemptUncheckedCreateNestedManyWithoutUserInput
   subjects?: Prisma.SubjectUncheckedCreateNestedManyWithoutTeacherInput
 }
 
@@ -602,6 +656,8 @@ export type UserUpdateWithoutSessionsInput = {
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   classroomCreated?: Prisma.ClassroomUpdateManyWithoutCreatorNestedInput
   classroomMember?: Prisma.ClassroomMemberUpdateManyWithoutUserNestedInput
+  tests?: Prisma.TestUpdateManyWithoutCreatorNestedInput
+  testsAttempted?: Prisma.AttemptUpdateManyWithoutUserNestedInput
   subjects?: Prisma.SubjectUpdateManyWithoutTeacherNestedInput
 }
 
@@ -616,6 +672,8 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   classroomCreated?: Prisma.ClassroomUncheckedUpdateManyWithoutCreatorNestedInput
   classroomMember?: Prisma.ClassroomMemberUncheckedUpdateManyWithoutUserNestedInput
+  tests?: Prisma.TestUncheckedUpdateManyWithoutCreatorNestedInput
+  testsAttempted?: Prisma.AttemptUncheckedUpdateManyWithoutUserNestedInput
   subjects?: Prisma.SubjectUncheckedUpdateManyWithoutTeacherNestedInput
 }
 
@@ -630,6 +688,8 @@ export type UserCreateWithoutClassroomCreatedInput = {
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   classroomMember?: Prisma.ClassroomMemberCreateNestedManyWithoutUserInput
+  tests?: Prisma.TestCreateNestedManyWithoutCreatorInput
+  testsAttempted?: Prisma.AttemptCreateNestedManyWithoutUserInput
   subjects?: Prisma.SubjectCreateNestedManyWithoutTeacherInput
 }
 
@@ -644,6 +704,8 @@ export type UserUncheckedCreateWithoutClassroomCreatedInput = {
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   classroomMember?: Prisma.ClassroomMemberUncheckedCreateNestedManyWithoutUserInput
+  tests?: Prisma.TestUncheckedCreateNestedManyWithoutCreatorInput
+  testsAttempted?: Prisma.AttemptUncheckedCreateNestedManyWithoutUserInput
   subjects?: Prisma.SubjectUncheckedCreateNestedManyWithoutTeacherInput
 }
 
@@ -674,6 +736,8 @@ export type UserUpdateWithoutClassroomCreatedInput = {
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   classroomMember?: Prisma.ClassroomMemberUpdateManyWithoutUserNestedInput
+  tests?: Prisma.TestUpdateManyWithoutCreatorNestedInput
+  testsAttempted?: Prisma.AttemptUpdateManyWithoutUserNestedInput
   subjects?: Prisma.SubjectUpdateManyWithoutTeacherNestedInput
 }
 
@@ -688,6 +752,8 @@ export type UserUncheckedUpdateWithoutClassroomCreatedInput = {
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   classroomMember?: Prisma.ClassroomMemberUncheckedUpdateManyWithoutUserNestedInput
+  tests?: Prisma.TestUncheckedUpdateManyWithoutCreatorNestedInput
+  testsAttempted?: Prisma.AttemptUncheckedUpdateManyWithoutUserNestedInput
   subjects?: Prisma.SubjectUncheckedUpdateManyWithoutTeacherNestedInput
 }
 
@@ -702,6 +768,8 @@ export type UserCreateWithoutClassroomMemberInput = {
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   classroomCreated?: Prisma.ClassroomCreateNestedManyWithoutCreatorInput
+  tests?: Prisma.TestCreateNestedManyWithoutCreatorInput
+  testsAttempted?: Prisma.AttemptCreateNestedManyWithoutUserInput
   subjects?: Prisma.SubjectCreateNestedManyWithoutTeacherInput
 }
 
@@ -716,6 +784,8 @@ export type UserUncheckedCreateWithoutClassroomMemberInput = {
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   classroomCreated?: Prisma.ClassroomUncheckedCreateNestedManyWithoutCreatorInput
+  tests?: Prisma.TestUncheckedCreateNestedManyWithoutCreatorInput
+  testsAttempted?: Prisma.AttemptUncheckedCreateNestedManyWithoutUserInput
   subjects?: Prisma.SubjectUncheckedCreateNestedManyWithoutTeacherInput
 }
 
@@ -746,6 +816,8 @@ export type UserUpdateWithoutClassroomMemberInput = {
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   classroomCreated?: Prisma.ClassroomUpdateManyWithoutCreatorNestedInput
+  tests?: Prisma.TestUpdateManyWithoutCreatorNestedInput
+  testsAttempted?: Prisma.AttemptUpdateManyWithoutUserNestedInput
   subjects?: Prisma.SubjectUpdateManyWithoutTeacherNestedInput
 }
 
@@ -760,6 +832,8 @@ export type UserUncheckedUpdateWithoutClassroomMemberInput = {
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   classroomCreated?: Prisma.ClassroomUncheckedUpdateManyWithoutCreatorNestedInput
+  tests?: Prisma.TestUncheckedUpdateManyWithoutCreatorNestedInput
+  testsAttempted?: Prisma.AttemptUncheckedUpdateManyWithoutUserNestedInput
   subjects?: Prisma.SubjectUncheckedUpdateManyWithoutTeacherNestedInput
 }
 
@@ -775,6 +849,8 @@ export type UserCreateWithoutSubjectsInput = {
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   classroomCreated?: Prisma.ClassroomCreateNestedManyWithoutCreatorInput
   classroomMember?: Prisma.ClassroomMemberCreateNestedManyWithoutUserInput
+  tests?: Prisma.TestCreateNestedManyWithoutCreatorInput
+  testsAttempted?: Prisma.AttemptCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSubjectsInput = {
@@ -789,6 +865,8 @@ export type UserUncheckedCreateWithoutSubjectsInput = {
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   classroomCreated?: Prisma.ClassroomUncheckedCreateNestedManyWithoutCreatorInput
   classroomMember?: Prisma.ClassroomMemberUncheckedCreateNestedManyWithoutUserInput
+  tests?: Prisma.TestUncheckedCreateNestedManyWithoutCreatorInput
+  testsAttempted?: Prisma.AttemptUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSubjectsInput = {
@@ -819,6 +897,8 @@ export type UserUpdateWithoutSubjectsInput = {
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   classroomCreated?: Prisma.ClassroomUpdateManyWithoutCreatorNestedInput
   classroomMember?: Prisma.ClassroomMemberUpdateManyWithoutUserNestedInput
+  tests?: Prisma.TestUpdateManyWithoutCreatorNestedInput
+  testsAttempted?: Prisma.AttemptUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSubjectsInput = {
@@ -833,6 +913,168 @@ export type UserUncheckedUpdateWithoutSubjectsInput = {
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   classroomCreated?: Prisma.ClassroomUncheckedUpdateManyWithoutCreatorNestedInput
   classroomMember?: Prisma.ClassroomMemberUncheckedUpdateManyWithoutUserNestedInput
+  tests?: Prisma.TestUncheckedUpdateManyWithoutCreatorNestedInput
+  testsAttempted?: Prisma.AttemptUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutTestsInput = {
+  id?: string
+  name?: string | null
+  email: string
+  emailVerified?: Date | string | null
+  image?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  classroomCreated?: Prisma.ClassroomCreateNestedManyWithoutCreatorInput
+  classroomMember?: Prisma.ClassroomMemberCreateNestedManyWithoutUserInput
+  testsAttempted?: Prisma.AttemptCreateNestedManyWithoutUserInput
+  subjects?: Prisma.SubjectCreateNestedManyWithoutTeacherInput
+}
+
+export type UserUncheckedCreateWithoutTestsInput = {
+  id?: string
+  name?: string | null
+  email: string
+  emailVerified?: Date | string | null
+  image?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  classroomCreated?: Prisma.ClassroomUncheckedCreateNestedManyWithoutCreatorInput
+  classroomMember?: Prisma.ClassroomMemberUncheckedCreateNestedManyWithoutUserInput
+  testsAttempted?: Prisma.AttemptUncheckedCreateNestedManyWithoutUserInput
+  subjects?: Prisma.SubjectUncheckedCreateNestedManyWithoutTeacherInput
+}
+
+export type UserCreateOrConnectWithoutTestsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutTestsInput, Prisma.UserUncheckedCreateWithoutTestsInput>
+}
+
+export type UserUpsertWithoutTestsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutTestsInput, Prisma.UserUncheckedUpdateWithoutTestsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutTestsInput, Prisma.UserUncheckedCreateWithoutTestsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutTestsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutTestsInput, Prisma.UserUncheckedUpdateWithoutTestsInput>
+}
+
+export type UserUpdateWithoutTestsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  classroomCreated?: Prisma.ClassroomUpdateManyWithoutCreatorNestedInput
+  classroomMember?: Prisma.ClassroomMemberUpdateManyWithoutUserNestedInput
+  testsAttempted?: Prisma.AttemptUpdateManyWithoutUserNestedInput
+  subjects?: Prisma.SubjectUpdateManyWithoutTeacherNestedInput
+}
+
+export type UserUncheckedUpdateWithoutTestsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  classroomCreated?: Prisma.ClassroomUncheckedUpdateManyWithoutCreatorNestedInput
+  classroomMember?: Prisma.ClassroomMemberUncheckedUpdateManyWithoutUserNestedInput
+  testsAttempted?: Prisma.AttemptUncheckedUpdateManyWithoutUserNestedInput
+  subjects?: Prisma.SubjectUncheckedUpdateManyWithoutTeacherNestedInput
+}
+
+export type UserCreateWithoutTestsAttemptedInput = {
+  id?: string
+  name?: string | null
+  email: string
+  emailVerified?: Date | string | null
+  image?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  classroomCreated?: Prisma.ClassroomCreateNestedManyWithoutCreatorInput
+  classroomMember?: Prisma.ClassroomMemberCreateNestedManyWithoutUserInput
+  tests?: Prisma.TestCreateNestedManyWithoutCreatorInput
+  subjects?: Prisma.SubjectCreateNestedManyWithoutTeacherInput
+}
+
+export type UserUncheckedCreateWithoutTestsAttemptedInput = {
+  id?: string
+  name?: string | null
+  email: string
+  emailVerified?: Date | string | null
+  image?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  classroomCreated?: Prisma.ClassroomUncheckedCreateNestedManyWithoutCreatorInput
+  classroomMember?: Prisma.ClassroomMemberUncheckedCreateNestedManyWithoutUserInput
+  tests?: Prisma.TestUncheckedCreateNestedManyWithoutCreatorInput
+  subjects?: Prisma.SubjectUncheckedCreateNestedManyWithoutTeacherInput
+}
+
+export type UserCreateOrConnectWithoutTestsAttemptedInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutTestsAttemptedInput, Prisma.UserUncheckedCreateWithoutTestsAttemptedInput>
+}
+
+export type UserUpsertWithoutTestsAttemptedInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutTestsAttemptedInput, Prisma.UserUncheckedUpdateWithoutTestsAttemptedInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutTestsAttemptedInput, Prisma.UserUncheckedCreateWithoutTestsAttemptedInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutTestsAttemptedInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutTestsAttemptedInput, Prisma.UserUncheckedUpdateWithoutTestsAttemptedInput>
+}
+
+export type UserUpdateWithoutTestsAttemptedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  classroomCreated?: Prisma.ClassroomUpdateManyWithoutCreatorNestedInput
+  classroomMember?: Prisma.ClassroomMemberUpdateManyWithoutUserNestedInput
+  tests?: Prisma.TestUpdateManyWithoutCreatorNestedInput
+  subjects?: Prisma.SubjectUpdateManyWithoutTeacherNestedInput
+}
+
+export type UserUncheckedUpdateWithoutTestsAttemptedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  classroomCreated?: Prisma.ClassroomUncheckedUpdateManyWithoutCreatorNestedInput
+  classroomMember?: Prisma.ClassroomMemberUncheckedUpdateManyWithoutUserNestedInput
+  tests?: Prisma.TestUncheckedUpdateManyWithoutCreatorNestedInput
+  subjects?: Prisma.SubjectUncheckedUpdateManyWithoutTeacherNestedInput
 }
 
 
@@ -845,6 +1087,8 @@ export type UserCountOutputType = {
   sessions: number
   classroomCreated: number
   classroomMember: number
+  tests: number
+  testsAttempted: number
   subjects: number
 }
 
@@ -853,6 +1097,8 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   sessions?: boolean | UserCountOutputTypeCountSessionsArgs
   classroomCreated?: boolean | UserCountOutputTypeCountClassroomCreatedArgs
   classroomMember?: boolean | UserCountOutputTypeCountClassroomMemberArgs
+  tests?: boolean | UserCountOutputTypeCountTestsArgs
+  testsAttempted?: boolean | UserCountOutputTypeCountTestsAttemptedArgs
   subjects?: boolean | UserCountOutputTypeCountSubjectsArgs
 }
 
@@ -897,6 +1143,20 @@ export type UserCountOutputTypeCountClassroomMemberArgs<ExtArgs extends runtime.
 /**
  * UserCountOutputType without action
  */
+export type UserCountOutputTypeCountTestsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TestWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountTestsAttemptedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AttemptWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
 export type UserCountOutputTypeCountSubjectsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.SubjectWhereInput
 }
@@ -914,6 +1174,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   classroomCreated?: boolean | Prisma.User$classroomCreatedArgs<ExtArgs>
   classroomMember?: boolean | Prisma.User$classroomMemberArgs<ExtArgs>
+  tests?: boolean | Prisma.User$testsArgs<ExtArgs>
+  testsAttempted?: boolean | Prisma.User$testsAttemptedArgs<ExtArgs>
   subjects?: boolean | Prisma.User$subjectsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
@@ -954,6 +1216,8 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   classroomCreated?: boolean | Prisma.User$classroomCreatedArgs<ExtArgs>
   classroomMember?: boolean | Prisma.User$classroomMemberArgs<ExtArgs>
+  tests?: boolean | Prisma.User$testsArgs<ExtArgs>
+  testsAttempted?: boolean | Prisma.User$testsAttemptedArgs<ExtArgs>
   subjects?: boolean | Prisma.User$subjectsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -967,6 +1231,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     sessions: Prisma.$SessionPayload<ExtArgs>[]
     classroomCreated: Prisma.$ClassroomPayload<ExtArgs>[]
     classroomMember: Prisma.$ClassroomMemberPayload<ExtArgs>[]
+    tests: Prisma.$TestPayload<ExtArgs>[]
+    testsAttempted: Prisma.$AttemptPayload<ExtArgs>[]
     subjects: Prisma.$SubjectPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1375,6 +1641,8 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   sessions<T extends Prisma.User$sessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   classroomCreated<T extends Prisma.User$classroomCreatedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$classroomCreatedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ClassroomPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   classroomMember<T extends Prisma.User$classroomMemberArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$classroomMemberArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ClassroomMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  tests<T extends Prisma.User$testsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$testsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  testsAttempted<T extends Prisma.User$testsAttemptedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$testsAttemptedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AttemptPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   subjects<T extends Prisma.User$subjectsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$subjectsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SubjectPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1898,6 +2166,54 @@ export type User$classroomMemberArgs<ExtArgs extends runtime.Types.Extensions.In
   take?: number
   skip?: number
   distinct?: Prisma.ClassroomMemberScalarFieldEnum | Prisma.ClassroomMemberScalarFieldEnum[]
+}
+
+/**
+ * User.tests
+ */
+export type User$testsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Test
+   */
+  select?: Prisma.TestSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Test
+   */
+  omit?: Prisma.TestOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TestInclude<ExtArgs> | null
+  where?: Prisma.TestWhereInput
+  orderBy?: Prisma.TestOrderByWithRelationInput | Prisma.TestOrderByWithRelationInput[]
+  cursor?: Prisma.TestWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TestScalarFieldEnum | Prisma.TestScalarFieldEnum[]
+}
+
+/**
+ * User.testsAttempted
+ */
+export type User$testsAttemptedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Attempt
+   */
+  select?: Prisma.AttemptSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Attempt
+   */
+  omit?: Prisma.AttemptOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AttemptInclude<ExtArgs> | null
+  where?: Prisma.AttemptWhereInput
+  orderBy?: Prisma.AttemptOrderByWithRelationInput | Prisma.AttemptOrderByWithRelationInput[]
+  cursor?: Prisma.AttemptWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AttemptScalarFieldEnum | Prisma.AttemptScalarFieldEnum[]
 }
 
 /**

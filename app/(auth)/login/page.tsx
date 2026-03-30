@@ -35,7 +35,7 @@ export default function LoginPage() {
       <header className="fixed top-0 inset-x-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-linear-to-br from-blue-500 to-indigo-600 flex items-center justify-center">
               <Lightbulb className="w-4 h-4 text-white" />
             </div>
             <span className="text-xl font-bold tracking-tight">
@@ -52,7 +52,7 @@ export default function LoginPage() {
 
       {/* Background blobs */}
       <div className="fixed inset-0 -z-10 overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-gradient-to-b from-blue-500/10 to-transparent rounded-full blur-3xl opacity-60" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-150 h-100 bg-linear-to-b from-blue-500/10 to-transparent rounded-full blur-3xl opacity-60" />
         <div className="absolute bottom-20 right-10 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl opacity-40" />
         <div className="absolute top-40 left-10 w-56 h-56 bg-amber-500/10 rounded-full blur-3xl opacity-30" />
       </div>
@@ -66,7 +66,7 @@ export default function LoginPage() {
 
             {/* Header */}
             <div className="text-center mb-8">
-              <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 mb-5 shadow-lg shadow-blue-500/20">
+              <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-linear-to-br from-blue-500 to-indigo-600 mb-5 shadow-lg shadow-blue-500/20">
                 <Lightbulb className="w-7 h-7 text-white" />
               </div>
               <h1 className="text-2xl font-extrabold tracking-tight mt-2">

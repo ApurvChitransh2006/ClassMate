@@ -62,3 +62,28 @@ export type Chapter = Prisma.ChapterModel
  * 
  */
 export type Content = Prisma.ContentModel
+/**
+ * Model Test
+ * 
+ */
+export type Test = Prisma.TestModel
+/**
+ * Model Question
+ * 
+ */
+export type Question = Prisma.QuestionModel
+/**
+ * Model Option
+ * 
+ */
+export type Option = Prisma.OptionModel
+/**
+ * Model Attempt
+ * 
+ */
+export type Attempt = Prisma.AttemptModel
+/**
+ * Model Answer
+ * 
+ */
+export type Answer = Prisma.AnswerModel

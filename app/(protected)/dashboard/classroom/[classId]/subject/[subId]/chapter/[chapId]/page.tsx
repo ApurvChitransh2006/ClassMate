@@ -30,6 +30,8 @@ import {
   Upload,
   ExternalLink,
   AlertCircle,
+  ArrowLeft,
+  ClipboardList,
 } from "lucide-react";
 import { signOut } from "next-auth/react";
 
@@ -55,6 +57,23 @@ type ChapterData = {
   classroomName: string;
   contents: Content[];
   isTeacher: boolean;
+};
+
+type TestItem = {
+  id: string;
+  title: string;
+  description?: string | null;
+
+  duration: number;
+  totalMarks: number;
+
+  startTime?: string | null;
+  endTime?: string | null;
+
+  createdAt: string;
+
+  attempted: boolean;
+  score: number | null;
 };
 
 // ── Content Card ───────────────────────────────────────
@@ -463,6 +482,143 @@ function UploadContentSheet({
   );
 }
 
+// ── Test Card ──────────────────────────────────────────
+function TestCard({
+  test,
+  isTeacher,
+  onDelete,
+}: {
+  test: {
+    id: string;
+    title: string;
+    duration: number;
+    totalMarks: number;
+    attempted: boolean;
+    score: number | null;
+  };
+  isTeacher: boolean;
+  onDelete?: (id: string) => void;
+}) {
+  const [deleting, startDelete] = useTransition();
+
+  const handleDelete = () => {
+    startDelete(async () => {
+      const res = await fetch(`/api/test/${test.id}`, {
+        method: "DELETE",
+      });
+      if (res.ok && onDelete) onDelete(test.id);
+    });
+  };
+
+  return (
+    <Card className="group border border-border bg-card rounded-2xl shadow-none hover:shadow-md transition-all duration-200 overflow-hidden">
+      {/* Top gradient bar */}
+      <div
+        className={`h-1 w-full ${
+          test.attempted
+            ? "bg-linear-to-r from-emerald-500 to-green-500"
+            : "bg-linear-to-r from-indigo-500 to-blue-500"
+        }`}
+      />
+
+      <CardContent className="p-5 space-y-3">
+        {/* Header */}
+        <div className="flex items-start justify-between gap-2">
+          <div className="flex items-center gap-2 flex-1 min-w-0">
+            <div
+              className={`shrink-0 w-8 h-8 rounded-lg flex items-center justify-center ${
+                test.attempted
+                  ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
+                  : "bg-indigo-500/10 text-indigo-600 dark:text-indigo-400"
+              }`}
+            >
+              <ClipboardList className="w-4 h-4" />
+            </div>
+
+            <h3 className="text-sm font-bold leading-snug line-clamp-1">
+              {test.title}
+            </h3>
+          </div>
+
+          <Badge
+            variant="outline"
+            className={`text-xs font-semibold px-2.5 py-0.5 rounded-full shrink-0 ${
+              test.attempted
+                ? "text-emerald-600 dark:text-emerald-400 border-emerald-500/30 bg-emerald-500/10"
+                : "text-indigo-600 dark:text-indigo-400 border-indigo-500/30 bg-indigo-500/10"
+            }`}
+          >
+            {test.attempted ? "Attempted" : "New"}
+          </Badge>
+        </div>
+
+        {/* Info */}
+        <p className="text-xs text-muted-foreground leading-relaxed">
+          {test.duration} mins • {test.totalMarks} marks
+        </p>
+
+        {/* Score (if attempted) */}
+        {test.attempted && (
+          <div className="text-xs font-medium text-emerald-600 dark:text-emerald-400">
+            Score: {test.score ?? 0} / {test.totalMarks}
+          </div>
+        )}
+
+        {/* Actions */}
+        <div className="flex items-center gap-2 pt-1">
+          {!test.attempted ? (
+            // 👉 NOT ATTEMPTED
+            <Button
+              size="sm"
+              variant="outline"
+              className="flex-1 rounded-xl border-border hover:bg-muted/60 font-medium text-xs h-9 group-hover:border-indigo-500/40 transition-colors"
+              onClick={() => window.open(`/dashboard/test/${test.id}`, "_blank")}
+            >
+              Start Test
+            </Button>
+          ) : (
+            // 👉 ATTEMPTED → SHOW 2 BUTTONS
+            <>
+              <Button
+                size="sm"
+                variant="outline"
+                className="flex-1 rounded-xl border-border hover:bg-muted/60 font-medium text-xs h-9"
+                onClick={() => window.open(`/dashboard/test/${test.id}`, "_blank")}
+              >
+                Re-attempt
+              </Button>
+
+              <Button
+                size="sm"
+                className="flex-1 rounded-xl text-xs h-9 bg-emerald-500 hover:bg-emerald-600 text-white"
+                onClick={() => window.open(`/dashboard/result/${test.id}`, "_blank")}
+              >
+                View Result
+              </Button>
+            </>
+          )}
+
+          {isTeacher && (
+            <Button
+              size="sm"
+              variant="outline"
+              className="rounded-xl border-rose-500/30 text-rose-500 hover:bg-rose-500/10 font-medium text-xs h-9"
+              onClick={handleDelete}
+              disabled={deleting}
+            >
+              {deleting ? (
+                <Loader2 className="w-3.5 h-3.5 animate-spin" />
+              ) : (
+                "Delete"
+              )}
+            </Button>
+          )}
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
 // ── Chapter Page ───────────────────────────────────────
 export default function ChapterPage() {
   const { data: session, status } = useSession();
@@ -473,9 +629,11 @@ export default function ChapterPage() {
   }>();
 
   const [data, setData] = useState<ChapterData | null>(null);
+  const [tests, setTests] = useState<TestItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [uploadSheetOpen, setUploadSheetOpen] = useState(false);
+  const [canManage, setCanManage] = useState(false);
 
   if (status === "unauthenticated") redirect("/login");
 
@@ -483,16 +641,33 @@ export default function ChapterPage() {
   const displayName = user?.name ?? "Unknown";
 
   useEffect(() => {
-    if (status !== "authenticated") return;
-    fetch(`/api/content/chapter/${params.chapId}`)
-      .then((r) => {
+    if (status !== "authenticated" || !params.classId) return;
+
+    Promise.all([
+      fetch(`/api/content/chapter/${params.chapId}`).then((r) => {
         if (!r.ok) throw new Error("Failed to load chapter");
         return r.json();
+      }),
+
+      fetch(`/api/class/is-admin/${params.classId}`).then((r) => r.json()),
+
+      fetch(`/api/chapter/${params.chapId}/get-test`).then((r) => {
+        if (!r.ok) throw new Error("Failed to load tests");
+        return r.json(); // returns TestItem[]
+      }),
+    ])
+      .then(([chapterData, adminRes, testsData]) => {
+        setData(chapterData);
+        setTests(testsData.tests);
+
+        setCanManage(adminRes.isAdmin || chapterData.isTeacher);
       })
-      .then((d) => setData(d))
-      .catch((e) => setError(e.message))
+      .catch((e) => {
+        setError(e.message);
+        setCanManage(false);
+      })
       .finally(() => setLoading(false));
-  }, [status, params.chapId]);
+  }, [status, params.classId, params.chapId]);
 
   const handleContentCreated = (content: Content) => {
     setData((prev) =>
@@ -506,6 +681,10 @@ export default function ChapterPage() {
         ? { ...prev, contents: prev.contents.filter((c) => c.id !== id) }
         : prev,
     );
+  };
+
+  const handleTestDeleted = (id: string) => {
+    setTests((prev) => prev.filter((t) => t.id !== id));
   };
 
   const docs =
@@ -583,6 +762,18 @@ export default function ChapterPage() {
       {/* Main */}
       <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 pt-24 sm:pt-28 pb-16 space-y-10">
         {/* Page header */}
+        <Link
+          href={`/dashboard/classroom/${params.classId}/subject/${params.subId}`}
+        >
+          <Button
+            variant="ghost"
+            size="sm"
+            className="text-muted-foreground hover:text-foreground rounded-full -ml-2 flex items-center gap-1.5"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Back to Subject
+          </Button>
+        </Link>
         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
           <div className="space-y-1">
             {loading ? (
@@ -602,15 +793,27 @@ export default function ChapterPage() {
             )}
           </div>
 
-          {data?.isTeacher && (
-            <Button
-              onClick={() => setUploadSheetOpen(true)}
-              className="shrink-0 bg-blue-600 hover:bg-blue-500 text-white rounded-full px-5 h-10 font-semibold shadow-md shadow-blue-500/20 flex items-center gap-2 text-sm"
-            >
-              <Plus className="w-4 h-4" />
-              Upload Content
-            </Button>
-          )}
+          <div className="flex items-center gap-2">
+            {canManage && (
+              <Link
+                href={`/dashboard/test/new/${params.chapId}`}
+                className="bg-emerald-600 hover:bg-emerald-500 text-white rounded-full px-5 h-10 font-semibold shadow-md shadow-emerald-500/20 flex items-center gap-2 text-sm"
+              >
+                <ClipboardList className="w-4 h-4" />
+                Create Test
+              </Link>
+            )}
+
+            {canManage && (
+              <Button
+                onClick={() => setUploadSheetOpen(true)}
+                className="bg-indigo-600 hover:bg-indigo-500 text-white rounded-full px-5 h-10 font-semibold shadow-md shadow-indigo-500/20 flex items-center gap-2 text-sm"
+              >
+                <Upload className="w-4 h-4" />
+                Upload Content
+              </Button>
+            )}
+          </div>
         </div>
 
         {/* Error */}
@@ -703,6 +906,42 @@ export default function ChapterPage() {
                       chapterId={data.id}
                       isTeacher={data.isTeacher}
                       onDeleted={handleContentDeleted}
+                    />
+                  ))}
+                </div>
+              )}
+            </section>
+
+            <section className="space-y-5">
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-emerald-500/10 text-emerald-500">
+                  <ClipboardList className="w-4 h-4" />
+                </div>
+                <div>
+                  <h2 className="text-lg font-bold tracking-tight">Tests</h2>
+                  <p className="text-xs text-muted-foreground">
+                    {tests.length} test{tests.length !== 1 ? "s" : ""}
+                  </p>
+                </div>
+              </div>
+
+              {tests.length === 0 ? (
+                <div className="flex flex-col items-center justify-center py-10 text-center border border-dashed border-border rounded-2xl bg-muted/20">
+                  <div className="w-10 h-10 rounded-2xl bg-muted flex items-center justify-center mb-2">
+                    <ClipboardList className="w-4 h-4 text-muted-foreground" />
+                  </div>
+                  <p className="text-sm font-medium text-muted-foreground">
+                    No tests yet
+                  </p>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {tests.map((t) => (
+                    <TestCard
+                      key={t.id}
+                      test={t}
+                      isTeacher={data.isTeacher}
+                      onDelete={handleTestDeleted} // optional
                     />
                   ))}
                 </div>

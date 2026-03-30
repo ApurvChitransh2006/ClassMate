@@ -549,13 +549,18 @@ export default function SubjectPage() {
   const displayName = user?.name ?? "Unknown";
 
   // Check if admin
-  useEffect(() => {
-    if (!classId) return;
-    fetch(`/api/class/is-admin/${classId}`)
-      .then((r) => r.json())
-      .then((d) => setCanManage(d.isAdmin))
-      .catch(() => setCanManage(false));
-  }, [classId]);
+useEffect(() => {
+  if (!classId || !subId) return;
+
+  Promise.all([
+    fetch(`/api/class/is-admin/${classId}`).then((r) => r.json()),
+    fetch(`/api/subject/${subId}/is-teacher`).then((r) => r.json()),
+  ])
+    .then(([adminRes, teacherRes]) => {
+      setCanManage(adminRes.isAdmin || teacherRes.isTeacher);
+    })
+    .catch(() => setCanManage(false));
+}, [classId, subId]);
 
   // Fetch chapters
   useEffect(() => {
